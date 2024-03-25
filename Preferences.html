@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Preferences</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    .container {
+        width: 80%;
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    input[type="checkbox"] {
+        margin-right: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2 style="text-align: center;">Preferences</h2>
+    <p>Students register for industrial attachment and indicate the kind of projects they wish to be engaged and they also set preferences on the location
+     of the industrial attachment.</p><br>
+
+     <div class="select-container">
+        <label for="interest">Interest:</label>
+        <select id="interest" name="interest list"> 
+            <option value=>Students interest...</option>
+            <option value="networking">Networking</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="web development">Web development</option>
+            <option value="data Analytics">Data Analytics</option>
+            <br>
+        </select>
+        <br>
+       
+     </div>
+      <div class="select-container" style="display: none;">
+        <label for="role">Type of Role:</label>
+     <select id="role" name="roles" style="display:none;"> 
+         <option value=>Roles...</option>
+         <option value="networking">Design and Implementation</option>
+         <option value="cybersecurity">Artificial intelligence</option>
+         <option value="web development">Developer</option>
+         <option value="data Analytics">Systems Engineering</option>
+     </select><br>
+        <button type="submit">Previous</button>
+        <button type="submit">Next</button>
+      </div>
+     
+      <div class="select-container">
+        <label for="location" style="display: none;">Location of attachment:</label>
+     <select id="location" name="location list" style="display: none;"> 
+         <option value=>Location...</option>
+         <option value="networking">Gaborone</option>
+         <option value="cybersecurity">Kanye</option>
+         <option value="web development">Palapye</option>
+         <option value="data Analytics">Atlanta</option>
+     </select><br>
+        <button type="submit">Previous</button>
+        <button type="submit">Next</button>
+      </div>
+
+      <div class="select-container">
+        <label for="kind of project" style="display: none;">Kind of project:</label>
+     <select id="project" name="project list" style="display: none;"> 
+         <option value=>Projects...</option>
+         <option value="networking">Documenting software and systems.</option>
+         <option value="cybersecurity">Maintaining and updating an existing application.</option>
+         <option value="web development">Performing research and development in a specific area of computer science.</option>
+         <option value="data Analytics">Developing a new application or feature for an existing application.</option>
+     </select><br>
+        <button type="submit">Previous</button>
+        <button type="submit">Next</button>
+      </div>
+      <div class="select-container">
+        <label for="needs" style="display: none;">Special Needs:</label>
+     <select id="needs" name="Special needs" style="display: none;"> 
+         <option value=>special needs...</option>
+         <option value="networking">Extended time on tests and assignments</option>
+         <option value="cybersecurity">Adaptive learning software.</option>
+         <option value="web development"> Accessible workstations and workspaces.</option>
+         <option value="data Analytics"> A quiet, low-distraction work environment.</option>
+     </select><br>
+        <button type="submit">Previous</button>
+        <button type="submit">Next</button>
+      </div>
+     
+
+    
+</div>
+</body>
+</html>
