@@ -1,65 +1,90 @@
 <?php
-// Include the configuration file
-require_once("php/configure.php");
+session_start();
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Create connection
+$conn = new mysqli("localhost", "root", "", "code");
 
-  // Get form data
-  $username = trim($_POST['username']);
-  $studentId = trim($_POST['student-id']);
-  $password = trim($_POST['password']);
-  $confirmPassword = trim($_POST['confirm-password']);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-  // Error messages
-  $usernameError = '';
-  $passwordError = '';
+// Define variables and set to empty values
+$username = $email = $student_id = $number = $password = $confirm_password = "";
+$usernameError = $emailErr = $student_idErr = $numberErr = $passwordErr = $confirm_passwordErr = "";
 
-  // Database connection (replace with your actual connection logic)
-  $conn = mysqli_connect("localhost", "root", "", "CODE");
-  if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-  }
-
-  // Validate username (assuming username is unique identifier)
-  $sql = "SELECT username FROM student WHERE username = ?";
-  $stmt = mysqli_prepare($conn, $sql);
-  mysqli_stmt_bind_param($stmt, "s", $username);
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
-
-  if (mysqli_num_rows($result) > 0) {
-    $usernameError = '<p style="font-size: 0.7rem; color: red;">Username already exists. Please choose a new one.</p>';
-  }
-
-  mysqli_stmt_close($stmt);
-
-  // Validate password (basic example, consider password hashing)
-  if (strlen($password) < 8) {
-    $passwordError = '<p style="font-size: 0.7rem; color: red;">Password must be at least 8 characters.</p>';
-  } elseif ($password !== $confirmPassword) {
-    $passwordError = '<p style="font-size: 0.7rem; color: red;">Passwords do not match.</p>';
-  }
-
-  // If no errors, insert data into database (replace with your actual query)
-  if (empty($usernameError) && empty($passwordError)) {
-    $sql = "INSERT INTO student (username, studentid, password) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash password before storing
-    mysqli_stmt_bind_param($stmt, "sss", $username, $studentId, $hashedPassword);
-
-    if (mysqli_stmt_execute($stmt)) {
-      echo "Registration successful!"; // Replace with success message/redirection
-    } else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // Function to sanitize input data
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
-    mysqli_stmt_close($stmt);
-  }
+    // Validate and sanitize inputs
+    $username = test_input($_POST["username"]);
+    $email = test_input($_POST["email"]);
+    $student_id = test_input($_POST["student_id"]);
+    $number = test_input($_POST["number"]);
+    $password = test_input($_POST["password"]);
+    $confirm_password = test_input($_POST["confirm_password"]);
 
-  mysqli_close($conn);
+    // Perform validation
+
+
+    if (empty($username)) {
+        $usernameError = "Username is required";
+    }
+   
+
+    if (empty($email)) {
+        $emailErr = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format";
+    }
+
+    if (empty($student_id)) {
+        $student_idErr= "Student ID is required";
+    }
+    if (empty($number)) {
+        $numberErr = "Phone number is required";
+    }
+
+    if (empty($password)) {
+        $passwordErr = "Password is required";
+    }
+
+    if ($password !== $confirm_password) {
+       $confirm_passwordErr= "Passwords do not match";
+    }
+
+    // If there are no errors, insert into database
+    if (empty($errors)) {
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare("INSERT INTO student (username, email, studentId, phoneNumber, password) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $username, $email, $email, $number, $hashed_password);
+
+        if ($stmt->execute()) {
+            // Registration successful, set session and redirect to login.php
+            $_SESSION['username'] = $username;
+            header("Location: login.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
 }
+
+$conn->close();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,61 +94,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Registration page</title>
 </head>
-   <body>
+<body>
     
-    <div class="container">
+<div class="container">
     <?php if (!empty($usernameError)) : ?>
-      <?= $usernameError ?> <?php endif; ?>
-
-    <?php if (!empty($passwordError)) : ?>
-      <?= $passwordError ?>
+        <?= $usernameError ?> 
     <?php endif; ?>
 
+    <?php if (!empty($passwordError)) : ?>
+        <?= $passwordError ?>
+    <?php endif; ?>
 
-        <div id="image-container">
-            <img src="images/login picture.jpg" alt="image of the School">
-        </div>
-
-        <div id="form-container">
-            <p>Already have an account? <a href="index.php">Sign in</a></p>
-            <form action="" method="post" id="registration-form">
-                <h3>Student Account Creation</h3>
-                <div class="input-container">
-                    <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
-                       <input type="text" required placeholder="Username" name="username">
-                </div>
-                <div class="input-container">
-                    <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
-                       <input type="number" required placeholder="Student-ID" maxlength="9" name="student-id">
-                </div>
-                <div class="input-container">
-                    <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
-                       <input type="password" required placeholder="Password" name="password">
-                       <i class="fa-regular fa-eye-slash" style="color: #d3d4d4;"></i>
-                </div>
-                <div class="input-container">
-                    <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
-                       <input type="password" required placeholder="Confirm Password" name="confirm-password">
-                       <i class="fa-regular fa-eye-slash" style="color: #d3d4d4;"></i>
-                </div>
-                <div class="input-container">
-                <button id="next" type="submit">Next</button>
-                </div>
-            </form>
-        </div>
+    <div id="image-container">
+        <img src="images/login picture.jpg" alt="image of the School">
     </div>
-    <script>
 
- // Add event listener to form submission
- document.getElementById('registration-form').addEventListener('submit', function(event) {
-            // Prevent default form submission behavior
-            event.preventDefault();
-            // Manually navigate to Preferences.php
-            window.location.href = 'Preferences.php';
-        });
+    <div id="form-container">
+        <p>Already have an account? <a href="login.php">Sign in</a></p>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="registration-form">
+            <h3>Student Account Creation</h3>
+            <div class="input-container">
+                <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                <input type="text" required placeholder="Username" name="username">
+            </div>
+            <div class="input-container">
+                <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                <input type="email" required placeholder="Enter email" name="email">
+            </div>
+            <div class="input-container">
+                <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                <input type="number" required placeholder="Student-ID" maxlength="9" name="student_id">
+            </div>
+            <div class="input-container">
+                <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                <input type="tel" required placeholder="Enter phone number" name="number">
+            </div>
+            <div class="input-container">
+                <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
+                <input type="password" required placeholder="Password" name="password">
+                <i class="fa-regular fa-eye-slash" style="color: #d3d4d4;"></i>
+            </div>
+            <div class="input-container">
+                <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
+                <input type="password" required placeholder="Confirm Password" name="confirm_password">
+                <i class="fa-regular fa-eye-slash" style="color: #d3d4d4;"></i>
+            </div>
+            <div class="input-container">
+                <button id="next" type="submit">Next</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- <div id="popup" class="/*//isset($registrationSuccess) && $registrationSuccess ? '' : 'hidden' ?>">
+    <div class="popup-content">
+        <p>You have successfully registered your details!</p>
+        <p>Press "OK" to continue.</p>
+        <button id="close-popup">OK</button>
+    </div> -->
+</div>
+<script>
+    const openBtn = document.getElementById("next");
+    const popup = document.getElementById("popup");
+    const closeBtn = document.getElementById("close-popup");
+
+    openBtn.addEventListener("click", () => {
+        popup.classList.remove("hidden");
+        document.body.classList.add("blur");
+    });
+
+    closeBtn.addEventListener("click", () => {
+        popup.classList.add("hidden");
+        document.body.classList.remove("blur");
+        // Redirect to pref.php
+        window.location.href = 'login.php';
+    });
+
+    // Optional: Close popup when clicking outside the card
+    window.addEventListener("click", (event) => {
+        if (event.target === popup) {
+            popup.classList.add("hidden");
+            document.body.classList.remove("blur");
+            // Redirect to pref.php
+            window.location.href = 'login.php';
+        }
+    });
     document.addEventListener('DOMContentLoaded', function() {
-
-       
         // Get all password inputs and their corresponding eye icons
         var passwordInputs = document.querySelectorAll('form input[type="password"]');
         var eyeIcons = document.querySelectorAll('.fa-eye-slash');
@@ -147,7 +203,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     });
 </script>
-
-
-  </body>
+</body>
 </html>

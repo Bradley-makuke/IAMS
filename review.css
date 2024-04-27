@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.header{
+    width: 100%;
+    height: 100px;
+    background-color: gray;
+}
+
+.sidebar {
+    background-color: darkred;
+    color: white;
+    width: 200px;
+    height: 100vh;
+    float: left;
+    padding: 20px;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+.profile p {
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 10px 0;
+}
+
+.offers-section {
+    margin-left: 200px;
+    padding: 20px;
+    width: 70%;
+    background-color: gray;
+  position: relative;
+  left: 80px;
+  top: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+
+.card {
+    background-color:transparent;
+    padding: 20px;
+    margin-top: 20px;
+    width: 700px;
+    height: 450px;
+    border-radius: 10px;
+    margin-left: 100px;
+    border:1px solid darkgray;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.accept {
+    background-color: green;
+    color: white;
+}
+
+.reject {
+    background-color: red;
+    color: white;
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.card th, .card td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.card tr:nth-child(even){background-color: #f2f2f2;}
+
+.card tr:hover {background-color: #ddd;}
+
+.card th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.accept, .reject {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.accept {
+    background-color: #28a745;
+}
+
+.reject {
+    background-color: #dc3545;
+}
+

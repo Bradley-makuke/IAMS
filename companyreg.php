@@ -1,63 +1,153 @@
 <?php
+// Include the database configuration file
+//include "configure.php";
 
-// Check if the form has been submitted
-if (isset($_POST['company_name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $company_name = trim($_POST['company_name']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
 
-    // Get the input values from the form
-    $company_name = $_POST['company_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    //error messages
+    $companyNameError = '';
+    $emailError = '';
+    $passwordError = '';
 
-    // Connect to your database (replace placeholders with your credentials)
-    $servername = "your_server_name";
-    $username = "your_db_username";
-    $password = "your_db_password";
-    $dbname = "your_database_name";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    //connection to the database
+    $conn = mysqli_connect("localhost", "root", "", "CODE");
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
     }
 
-    // Validate passwords
-    if ($password !== $confirm_password) {
-        echo "Error: Passwords do not match.";
-        $conn->close();
-        exit(); // Terminate script execution
+    // Validate uniqueness of company name
+    $sql = "SELECT * FROM organisation WHERE company_name = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $company_name);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) > 0) {
+        $companyNameError = '<p style="font-size: 0.7rem; color: red;">Company name already exists. Please choose a different one.</p>';
     }
 
-    // Hash the password for security (recommended)
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);  // Use a strong hashing algorithm
+    mysqli_stmt_close($stmt);
 
-    // Prepare the SQL statement to insert data
-    $sql = "INSERT INTO organizations (company_name, email, password) VALUES (?, ?, ?)";
+    // Validate uniqueness of email
+    $sql = "SELECT * FROM organisation WHERE email = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    // Prepare a statement object for secure insertion
-    $stmt = $conn->prepare($sql);
-
-    // Bind the parameters to the statement
-    $stmt->bind_param("sss", $company_name, $email, $hashed_password); // Use hashed password
-
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Data inserted successfully
-        echo "Registration successful!";
-        // Optionally, redirect to a success page or provide further instructions
-    } else {
-        // Error occurred
-        echo "Error: " . $stmt->error;
+    if (mysqli_num_rows($result) > 0) {
+        $emailError = '<p style="font-size: 0.7rem; color: red;">Email already exists. Please use a different one.</p>';
     }
 
-    // Close the statement and connection
-    $stmt->close();
-    $conn->close();
-} else {
-    // Form not submitted or missing data
-    echo "Error: Please fill out the registration form completely.";
+    mysqli_stmt_close($stmt);
+
+    // If there are no errors, insert data into the database
+    if (empty($companyNameError) && empty($emailError)) {
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert data into the database
+        $sql = "INSERT INTO organisation (company_name, email, password) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $company_name, $email, $hashedPassword);
+
+        if (mysqli_stmt_execute($stmt)) {
+            // Registration successful
+            $registrationSuccess = true;
+        } else {
+            // Error inserting data
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt);
+    }
+
+    mysqli_close($conn);
 }
-
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="orgreg.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Registration Page</title>
+</head>
+<body>
+    <div class="container">
+        <div id="image-container">
+            <img src="images/login picture.jpg" alt="image of the School">
+        </div>
+        <div id="form-container">
+            <p>Already have an account? <a href="index.php">Sign in</a></p>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="registration-form">
+                <h3>Organization Account Creation</h3>
+                <div class="input-container">
+                    <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                    <input type="text" required placeholder="Company Name" name="company_name">
+                </div>
+                <div class="input-container">
+                    <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
+                    <input type="email" required placeholder="Email" name="email">
+                </div>
+                <div class="input-container">
+                    <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
+                    <input type="password" required placeholder="Password" name="password">
+                    <i class="fa-regular fa-eye-slash"></i>
+                </div>
+                <div class="input-container">
+                    <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
+                    <input type="password" required placeholder="Confirm Password" name="confirm_password">
+                    <i class="fa-regular fa-eye-slash"></i>
+                </div>
+                <div class="input-container">
+                    <button id="next" type="submit">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="popup" class="<?= isset($registrationSuccess) && $registrationSuccess ? '' : 'hidden' ?>">
+        <div class="popup-content">
+            <h2>Registration Successful!</h2>
+            <p>Press "OK" to continue.</p>
+            <button id="close-popup">OK</button>
+        </div>
+    </div>
+    <script>
+        const openBtn = document.getElementById("next");
+        const popup = document.getElementById("popup");
+        const closeBtn = document.getElementById("close-popup");
+
+        openBtn.addEventListener("click", () => {
+            popup.classList.remove("hidden");
+            document.body.classList.add("blur");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            popup.classList.add("hidden");
+            document.body.classList.remove("blur");
+            // Redirect to pref.php
+            window.location.href = 'pref.php';
+        });
+
+        // Optional: Close popup when clicking outside the card
+        window.addEventListener("click", (event) => {
+            if (event.target === popup) {
+                popup.classList.add("hidden");
+                document.body.classList.remove("blur");
+                // Redirect to pref.php
+                window.location.href = 'pref.php';
+            }
+        });
+    </script>
+</body>
+</html>

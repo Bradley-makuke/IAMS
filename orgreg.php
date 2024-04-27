@@ -1,30 +1,84 @@
 <?php
 // Include the database configuration file
-require_once("php/configure.php");
+include "configure.php";
 
+ //error messages
+ $companyNameError = '';
+ $emailError = '';
+ $passwordError = '';
+ $confirm_passwordError = '';
+
+ // variables set to empty values;
+ $username = $email = $password = $confirm_password = "";
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
-    $company_name = trim($_POST['company_name']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
 
-    //error messages
-    $companyNameError = '';
-    $emailError = '';
-    $passwordError = '';
-
-    //connection to the database
-    $conn = mysqli_connect("localhost", "root", "", "CODE");
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+    //Encoding the data with a function
+    function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
+    // Validate username 
+    if(empty($_POST['username'])){
+        $companyNameError = "Username is required!!";
+    }
+
+    else{
+            // Get form data
+        $username = test_input($_POST['username']); 
+
+    }
+
+    if(!preg_match('/^[^\s]+$/', $username)){
+        $companyNameError = "username shouldnt have numbers and white spaces";
+    }
+
+    // validate the email 
+    if(empty($_POST['email'])){
+        $emailError = "email is required!!";
+    }
+    else{
+        $email = test_input($_POST['email']);
+
+    }
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $emailError = "Invalid email format";
+    }
+
+      // validate the password 
+      if(empty($_POST['password'])){
+        $passwordError = "password is required!!";
+    }
+    else{
+        $password = test_input($_POST['password']);
+
+    }
+    if(!preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s])(?!.*\s).{8,}$/', $password)){
+        $passwordError = "Password is not valid";
+    }
+      // validate the confirmation password
+      if(empty($_POST['confirm_password'])){
+        $confirmpasswordError = "Confirmation passowrd is required!!";
+    }
+    else{
+        $confirm_password = test_input($_POST['confirm_password']);
+
+    }
+    if(!preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s])(?!.*\s).{8,}$/', $confirm_password)){
+        $confirmpasswordError = "Password is not valid";
+    }
+   
+    
+
+
+
     // Validate uniqueness of company name
-    $sql = "SELECT * FROM organisation WHERE company_name = ?";
+    $sql = "SELECT * FROM organisation WHERE username = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $company_name);
+    mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -47,20 +101,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     mysqli_stmt_close($stmt);
 
-    // If there are no errors, insert data into the database
-    if (empty($companyNameError) && empty($emailError)) {
+    // If  the passwords match you can insert into the database;
+    if ($password === $confirm_password) {
+        $passwordError = $confirm_passwordError = "Passowrds do not match!";
         // Hash password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert data into the database
-        $sql = "INSERT INTO organisation (company_name, email, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO organisation (username, email, password) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "sss", $company_name, $email, $hashedPassword);
+        mysqli_stmt_bind_param($stmt, "sss",$username, $email, $hashedPassword);
 
         if (mysqli_stmt_execute($stmt)) {
             // Registration successful
-            echo "Registration successful!";
-            // Redirect to a success page or perform other actions as needed
+            $registrationSuccess = true;
         } else {
             // Error inserting data
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -69,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 
-    mysqli_close($conn);
+  
 }
 ?>
 
@@ -89,46 +143,143 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <img src="images/login picture.jpg" alt="image of the School">
         </div>
         <div id="form-container">
-            <p>Already have an account? <a href="index.php">Sign in</a></p>
-            <form action="" method="post" id="registration-form">
+            <p>Already have an account? <a href="login.php">Sign in</a></p>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="registration-form">
                 <h3>Organization Account Creation</h3>
+
                 <div class="input-container">
                     <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
-                       <input type="text" required placeholder="Company Name" name="company_name">
+                       <input type="text"  placeholder="Company Name" name="username" id="username">
+                       <span class="error" id="usernameError"><p><?php echo "$companyNameError"; ?></p></span>
                 </div>
                 <div class="input-container">
                     <i class="fa-regular fa-user one" style="color: #d3d4d4;"></i>
-                       <input type="email" required placeholder="Email" name="email">
+                       <input type="email" required placeholder="Email" name="email" id="email">
+                       <span class="error" id="emailError"><p><?php echo "$emailError"; ?></p></span>
                 </div>
                 <div class="input-container">
                     <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
-                       <input type="password" required placeholder="Password" name="password">
+                       <input type="password" required placeholder="Password" name="password" id="password">
                        <i class="fa-regular fa-eye-slash"></i>
+                       <span class="error" id="passowrdError"><p><?php echo "$passwordError"; ?></p></span>
                 </div>
                 <div class="input-container">
                     <i class="fa-solid fa-lock" style="color: #d3d4d4;"></i>
-                       <input type="password" required placeholder="Confirm Password" name="confirm_password">
+                       <input type="password" required placeholder="Confirm Password" name="confirm_password" id="confirmPassword">
                        <i class="fa-regular fa-eye-slash"></i>
+                       <span class="error" id="confirmPasswordError"><p><?php echo "$confirm_passwordError"; ?></p></span>
                 </div>
                 <div class="input-container">
-                 <a href="pref.html"><button id="next" type="button">Next</button></a>
+                 <button id="next" type="submit">Next</button>
                 </div>
             </form>
         </div>
+        <div id="popup" class="<?= isset($registrationSuccess) && $registrationSuccess ? '' : 'hidden' ?>">
+            <div class="popup-content">
+                <h2>Registration Successful!</h2>
+                <p>Press "OK" to continue.</p>
+                <button id="close-popup">OK</button>
+            </div>
+        </div>
     </div>
     <script>
+       /* const openBtn = document.getElementById("next");
+        const popup = document.getElementById("popup");
+        const closeBtn = document.getElementById("close-popup");
 
-        // Add event listener to form submission
- document.getElementById('registration-form').addEventListener('submit', function(event) {
-            // Prevent default form submission behavior
-            event.preventDefault();
-            // Manually navigate to Preferences.php
-            window.location.href = 'Preferences.php';
+        openBtn.addEventListener("click", () => {
+            popup.classList.remove("hidden");
+            document.body.classList.add("blur");
         });
 
+        closeBtn.addEventListener("click", () => {
+            popup.classList.add("hidden");
+            document.body.classList.remove("blur");
+            // Redirect to pref.php
+            window.location.href = 'login.php';
+        });
 
+        // Optional: Close popup when clicking outside the card
+        window.addEventListener("click", (event) => {
+            if (event.target === popup) {
+                popup.classList.add("hidden");
+                document.body.classList.remove("blur");
+                // Redirect to pref.php
+                window.location.href = 'pref.php';
+            }
+        });*/
 
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const form = document.getElementById("registration-form");
+    
+    const showError = (inputId, message) => {
+        const errorElement = document.getElementById(inputId + "Error");
+        errorElement.querySelector("p").textContent = message;
+    };
+    
+    const validateForm = () => {
+        let isValid = true;
+
+        // Check each input field
+        const usernameInput = document.getElementById("username");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        
+        if (usernameInput.value.trim() === "") {
+            showError("username", "Username is required");
+            isValid = false;
+        } else {
+            showError("username", "");
+        }
+
+        if (emailInput.value.trim() === "") {
+            showError("email", "Email is required");
+            isValid = false;
+        } else {
+            showError("email", "");
+        }
+
+        if (passwordInput.value.trim() === "") {
+            showError("password", "Password is required");
+            isValid = false;
+        } else if (passwordInput.value.length < 8 || passwordInput.value.length > 25) {
+            showError("password", "Password must be between 8 and 25 characters");
+            isValid = false;
+        } else {
+            showError("password", "");
+        }
+
+        if (confirmPasswordInput.value.trim() === "") {
+            showError("confirmPassword", "Please confirm your password");
+            isValid = false;
+        } else if (confirmPasswordInput.value !== passwordInput.value) {
+            showError("confirmPassword", "Passwords do not match");
+            isValid = false;
+        } else {
+            showError("confirmPassword", "");
+        }
+
+        return isValid;
+    };
+    
+    form.addEventListener("submit", function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+    
+    // Show error messages when input fields are focused
+    const inputFields = form.querySelectorAll("input");
+    inputFields.forEach(input => {
+        input.addEventListener("focus", function() {
+            const errorElement = document.getElementById(input.id + "Error");
+            if (errorElement) {
+                showError(input.id, errorElement.querySelector("p").textContent);
+            }
+        });
+    });
         // Get all password inputs and their corresponding eye icons
         var passwordInputs = document.querySelectorAll('form input[type="password"]');
         var eyeIcons = document.querySelectorAll('.fa-eye-slash');
@@ -151,8 +302,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
     });
-</script>
-
-
+    </script>
 </body>
 </html>

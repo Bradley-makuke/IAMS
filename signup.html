@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Sign-up</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device=width, initial-scale=1.0">
+        <link rel="stylesheet" href="signup.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+    <body>
+       <form class="sign-up" action="signup" method="post">
+        <header class="header">
+            <h4>Sign up with your email.</h4>
+            <div class=" divider"></div>
+        </header>
+        <fieldset class="details">
+            <label for="">What is your email?</label><br>
+            <input type="email" name="email" class="box" placeholder="Enter Email" required pattern="[a-z0-5]{8,}"><br>
+            <label for="">What is your preferred Name</label><br>
+            <input type="name" name="name" class="box" placeholder="Enter UserName" required pattern="[a-z0-5]{8,}"><br>
+         
+            <div class="password-container">
+            
+            <label for="">Create password</label><br>
+            <input type="password" name="password" class="box" placeholder="Enter password" required  id="pass">
+            <i class="fa-solid fa-eye" id="show-password"></i><br>
+            <div class="indicator">
+            <p class="text">Password is weak <br></p>
+        </div>
+            </div>
+
+            <div class="password-container">
+            <label for="">Confirm Password</label><br>
+            <input type="password" name="confirm_password" class="box confirm" placeholder="Confirm password" required id="confirm_password">
+            <i class="fa-solid fa-eye icon" id="show-password"></i><br>
+            <div class="confirmation">
+            <p class="match">Password does not match</p>
+            <div class=" divider mid"></div>
+        </div>
+        </div>
+        
+        </fieldset>
+        <fieldset class="Gender">
+            <label for="">What is your Gender?</label><br>
+            <input type="radio" name="Gender" id=""> Male <br>
+            <input type="radio" name="Gender" id=""> Female <br>
+            <div class=" divider low"></div>
+        </fieldset>
+        <fieldset class="sign">
+            <a href="virtualid.html"><button id="SignUp" >SignUp</button></a><br>
+
+         <p>Have an account? <a href="login.html">Login</a></p>
+        </fieldset>
+    </form>
+       <script src="signScript.js"></script>
+    </body>
+</html>

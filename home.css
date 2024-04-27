@@ -1,0 +1,376 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  
+  header {
+    width: 100%;
+    background: rgb(160, 12, 12);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    /*border-bottom: 1px solid gainsboro;*/
+  }
+  
+  header img {
+    opacity: 0.7;
+    width: 50px;
+    position: absolute;
+    left: 5%;
+  }
+  
+  header a {
+    color: gainsboro;
+  }
+  
+  .searchbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    border: none transparent;
+    outline: none;
+    background: transparent;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .searchbar input {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    border: 1px solid white;
+    padding-left: 15px;
+  }
+  
+  .searchbar a {
+    position: relative;
+    left: -12%;
+    z-index: 1;
+  }
+  .nav-link{
+    margin-left: 30px;
+  }
+  
+  #login {
+    position: absolute;
+    right: 2%;
+    top: 38px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: blue;
+
+  }
+  
+  .hero-section {
+    flex: 1;
+    width: 100%;
+    height: 440px;
+    background: url(Hero\ image.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-text {
+    position: relative;
+    top: -25px;
+   
+  }
+  .hero-section h1{
+    font-size: 3rem;
+  }
+  .hero-section h3{
+    font-size: 2rem;
+  }
+  .call-to-action {
+    position: relative;
+    top: 100px;
+    left: -30%;
+    display: block;
+    text-align: center;
+  }
+  
+  .call-to-action button {
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    color: gainsboro;
+    background-color: blue;
+    display: inline;
+    position: relative;
+    top: 40px;
+  }
+  
+  .call-to-action button:hover{
+    width: 110px;
+    height: 32px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: gainsboro;
+  }
+  .call-to-action button a{
+    color: gainsboro;
+  }
+  main {
+    /* Added min-height to push content below the hero section */
+    min-height: calc(100vh - 100px); /* Adjust 100px for header height */
+  }
+  
+  .partners{
+   position: relative;
+  overflow: hidden;
+  }
+  
+  .carousel {
+    display: flex;
+  overflow-x: hidden;
+  }
+
+  h2{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center; 
+  }
+  .company-card{
+    height: 300px;
+    box-shadow: 0px 8px 9px 0px gainsboro;
+    border-radius: 10px;
+    border: 1px solid gainsboro;
+    text-align: center;
+    flex: 0 0 calc(25% - 20px);
+    margin: 0 10px;
+  }
+  .card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .company-card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hide the back of the card */
+}
+.card-front {
+  background-color: #ffffff; /* Front of the card color */
+  text-align: center;
+}
+.card-back {
+  background-color: blue; /* Back of the card color */
+  text-align: center;
+  transform: rotateY(180deg);
+  color: white;
+  border-radius: 10px;
+}
+  .navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none; /*Initially hidden */
+  }
+
+  .prev, .next {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+.dots-container {
+  text-align: center;
+  margin-top: 20px;
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: rgba(255, 0, 0, 0.5); /* Semi-transparent red */
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+.dot.active {
+  background-color: red; /* Active dot color */
+}
+  .card-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: gainsboro;
+    margin-top: 30px;
+    margin-left: 50px;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+  }
+  .company-card p{
+    margin-top: 25px;
+  }
+
+  .card-image img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
+  }
+  .news{
+    width: 88%;
+    border: 10px solid gainsboro;
+    margin-left: 5%;
+    height: max-content;
+    border-radius: 5px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+
+  .upload{
+    width: 100%;
+    height: 70px;
+    border: 1px solid gainsboro;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-top: 15px;
+  }
+  .profile{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90% 90%;
+    border: none;
+   float: left;
+   margin-top: -45px;
+   
+  }
+  .profile img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  .title, .post-details{
+    clear: left;
+    margin-left: 90px;
+  
+  }
+.post-details{
+  font-size: 0.8rem;
+  margin-top:10px;
+}
+
+  .news-content{
+    width: 100%;
+    height: 420px;
+    padding: 0%;
+    margin-left: 40px;
+  }
+
+  .news-image{
+    width: 400px;
+    height: 390px;
+    margin-bottom: 20px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 20px;
+    float: left;
+    margin-right: 30px;
+  }
+  .news-image img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+  }
+
+  .description{
+   margin-top: 40px;
+margin-left: 70px;
+  }
+
+  footer{
+    height: 200px;
+    width: 100%;
+    bottom: 0%;
+    background-color: white;
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid gainsboro;
+  }
+
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .footer-section {
+    flex-basis: 30%;
+  }
+  
+  .footer-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+
+  }
+
+  
+  
+  .footer-section p {
+    line-height: 1.5;
+  }
+  
+  .footer-section a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .footer-section a:hover {
+    text-decoration: underline;
+  }
+  .sec-b i{
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
