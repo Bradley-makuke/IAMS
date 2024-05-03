@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="LogsandReports.css" />
+    <title>LogsandReports</title>
+  </head>
+  <body>
+    <div class="row">
+      <div class="column1">
+        <div class="nav">
+          <img src="UBlogo.png" alt="website logo" /><br><br><br>
+          <a href="notifications.html"><i class="fa-solid fa-bell"></i>Notifications</a><br />
+          <a href="messages.html"><i class="fa-solid fa-envelope"></i>Messages</a
+          ><br />
+          <a href="About.html"><i class="fa-solid fa-circle-info"></i>About</a
+          ><br />
+          <a href="contactus.html"><i class="fa-solid fa-phone"></i>Contact Us</a
+          ><br />
+          <a href="index.php"
+            ><i class="fa-solid fa-user"></i>Log Out</a
+          >
+        </div>
+      </div>
+
+      <div class="column2">
+    <header>
+      <div class="searchbar">
+          <form>
+            <input type="text" name="text" class="searchbox" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass" style="color: #2309ec;"></i>
+          </form>
+        </div>
+
+      <div class="profile-container">
+        
+        <a href="#"><i class="fa-solid fa-bell"></i></a>
+        <a href="#"><i class="fa-solid fa-comment"></i></a>
+        <span id="profile"><p>BM</p></span>
+        <a href="#myDropDown"
+          ><i class="fa-solid fa-caret-down" onclick="dropIt()"></i
+        ></a>
+        <div class="profile-menu" id="myDropdown">
+          <ul>
+            <br />
+            <li><a href="#">Accessibility</a></li>
+            <br />
+            <hr />
+            <br />
+            <li><a href="#">Profile</a></li>
+            <br />
+            <li><a href="#">Private files</a></li>
+            <br />
+            <hr />
+            <br />
+            <li><a href="#">Preferences</a></li>
+            <br />
+            <hr />
+            <br />
+            <li><a href="#">Logout</a></li>
+            <br />
+          </ul>
+        </div>
+      </div>
+    </header>
+    
+    <h1>Logs and Reports</h1>
+    <main>
+      <div class="dash-cards">
+        <br><br><br>
+        <a href="browse.html"><i class="fa-solid fa-cloud"></i><h2>Upload Files</h2></a>
+        <br><br><br><br>
+        <p>Choose a file or drag and drop it here</p>
+        <p class="spec"> JPEG, PNG, PDG and MP4 formats. Up to 50MB</p>
+        <br><br>
+        <form action="/action_page.php">
+          <input type="file" id="myFile" name="filename">
+          <input type="submit">
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+    <footer>
+      <div id="left-links">
+        <i class="fa-solid fa-headset"></i>
+        <h5>Contact Us</h5>
+        <br />
+        <h6>+267 XXX-XXX-XX</h6>
+      </div>
+
+      <div id="generic">
+        <p>You are logged in as (#Userexample)</p>
+        <br />
+        <p><a href="login.html">Log out</a></p>
+        <br />
+        <hr />
+        <p>&copy; Copyright 2024</p>
+        <br />
+      </div>
+      <div id="right-links">
+        <h5>Email</h5>
+        <br />
+        <span><i class="fa-solid fa-inbox"></i>info@cs.ub.bw</span>
+      </div>
+    </footer>
+
+    <script>
+      function dropIt() {
+        var drop = document.getElementById("myDropdown");
+        if (drop.style.display == "" || drop.style.display == "none") {
+          drop.style.display = "block";
+        } else {
+          drop.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
