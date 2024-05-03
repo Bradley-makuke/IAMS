@@ -21,72 +21,35 @@
     </style>
 </head>
 <body>
-    
-    <form action="preferences.php" method="post">
-        <h3>Skills Information</h3>
-        <!--sukiru wo misete kudasai-->
-        <div id="skills">
-            <h3>Skill Type:</h3>
-                <input type="checkbox"name="skill" value="DevOps" id="skill1">
-                <label for="skill1">Dev Ops Engineering</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill2">
-                <label for="skill2">Artificial Intelligence</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill3">
-                <label for="skill3">Data Science and Analytics</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill4">
-                <label for="skill4">Cloud Computing</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill5">
-                <label for="skill5">Cyber Security</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill6">
-                <label for="skill6">Block Chain</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill7">
-                <label for="skill7">Software Development</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill8">
-                <label for="skill8">Web Development</label>
-                <input type="checkbox"name="skill" value="DevOps" id="skill9">
-                <label for="skill9">Machine Learning</label>
-           <br>
-            <label for="languages">Languages/Tools:</label>
-           <textarea name="languages" id="languages" cols="30" rows="2"></textarea><br>
-           
-          </div>
-          <!-- Amme o kgona go buisa batho? -->
-          <h3>Soft Skills</h3>
-          <p>List any relevant soft skills.</p>
-          <div id="softSkills">
-            <input type="text" id="softSkill1" name="softSkill1"><br>
-            <input type="text" name="softSkill2" id="softSkill2"><br>
-            <input type="text" name="softSkill3" id="softSkill3"><br>
-          </div>
-            <!--Pin that location!!-->
-          <label for="location">Preferred Location for Internship:</label>
-          <input type="text" id="location" name="location" required><br>
-              <!--Project Types-->
-          <h3>Type of Projects Interested In</h3>
-
-          <textarea id="projects" name="projects" rows="4" required></textarea><br>
-           <input type="submit" value="Submit" id="btn">
-
+    <h1>Student Preferences</h1>
+    <form method="post" action="preferences.php">
+  
+      <h2>Hard Skills</h2>
+      <p>Select at least 3 hard skills (you can select more):</p>
+      <ul>
+        <li><input type="checkbox" name="skills[]" value="Java"> Java</li>
+        <li><input type="checkbox" name="skills[]" value="Python"> Python</li>
+        <li><input type="checkbox" name="skills[]" value="C++"> C++</li>
+        <li><input type="checkbox" name="skills[]" value="JavaScript"> JavaScript</li>
+        <li><input type="checkbox" name="skills[]" value="SQL"> SQL</li>
+        <li><input type="checkbox" id="other_checkbox" name="skills[]" value="other"> Other (specify below):</li>
+        <li id="other_skill" style="display: none;"><input type="text" name="other_skill"></li>
+      </ul>
+  
+      <h2>Preferred Location(s)</h2>
+      <p>Type in your preferred locations, separated by commas (e.g., Lobatse, Gaborone):</p>
+      <input type="text" name="preferred_locations" required>
+  
+      <h2>Preferred Projects</h2>
+      <p>Type in your preferred projects or projects of interest (optional):</p>
+      <textarea name="preferred_projects" rows="5"></textarea>
+  
+      <br>
+      <input type="submit" value="Submit Preferences">
     </form>
-
-    <script>
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-const submitButton = document.querySelector('button[type="submit"]');
-
-let checkedCount = 0;
-
-function updateSelection() {
-  checkedCount = checkboxes.filter(checkbox => checkbox.checked).length;
-  submitButton.disabled = checkedCount === 0; // Enable submit only if 1-3 checked
-
-  for (const checkbox of checkboxes) {
-    checkbox.disabled = checkedCount >= 3 && !checkbox.checked;
-  }
-}
-
-checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateSelection));
-updateSelection(); // Initial check
-
-    </script>
+  
+  </body>
+  
+  
 </body>
 </html>

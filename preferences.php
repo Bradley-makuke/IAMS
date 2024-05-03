@@ -1,54 +1,62 @@
+PHP
 <?php
-// include configuration code
+
+// Include configuration file (replace with your database connection details)
 include "configure.php";
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$errors = array(); // Array to store any errors encountered
 
-// Function to clean and validate input
-function sanitize_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+// Process form data
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Clean and validate input
-    $languages = sanitize_input($_POST["languages"]);
-    $location = sanitize_input($_POST["location"]);
-    $projects = sanitize_input($_POST["projects"]);
-    $softSkills = array();
-    for ($i = 1; $i <= 3; $i++) {
-        $softSkills[$i] = sanitize_input($_POST["softSkill$i"]);
+  $skills = array();
+  if (isset($_POST["skills"])) {
+    foreach ($_POST["skills"] as $skill) {
+      $skills[] = $skill; // Add selected skills to an array
     }
-    // Get the text values of the checked checkboxes
-    $skills = "";
-    if(isset($_POST["skill"])) {
-        $skillLabels = $_POST["skill"];
-        foreach($skillLabels as $skillLabel) {
-            $skills .= sanitize_input($skillLabel) . ", ";
-        }
-        // Remove the trailing comma and space
-        $skills = rtrim($skills, ", ");
+  }
+
+  $preferred_locations = trim($_POST["preferred_locations"]);
+  $preferred_projects = trim($_POST["preferred_projects"]);
+
+ 
+
+  // Validation
+  if (empty($skills)) {
+    $errors[] = "Please select at least 3 hard skills.";
+  } else if (count($skills) < 3) {
+    $errors[] = "You must select at least 3 hard skills.";
+  }
+
+  if (empty($preferred_locations)) {
+    $errors[] = "Please enter your preferred locations.";
+  }
+
+ 
+
+  // If no errors, process and store data
+  if (empty($errors)) {
+    session_start();
+    if (!isset($_SESSION["username"])) {
+      $errors[] = "Session error: Username not found.";
     }
+    else {
+        $username = $_SESSION["username"];
+      
+    $skills_string = implode(",", $skills); // Join skills using comma
+    $sql = "INSERT INTO student_preferences (username, skills, location, projects) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $username, $skills_string, $preferred_locations, $preferred_projects);
 
-    // Prepare and bind statement for inserting data into the database
-    $stmt = $conn->prepare("INSERT INTO preference (languages, location, projects, soft_skill_1, soft_skill_2, soft_skill_3, skills) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $languages, $location, $projects, $softSkills[1], $softSkills[2], $softSkills[3], $skills);
-
-    // Execute the statement
-    if ($stmt->execute() === TRUE) {
-        echo "New record inserted successfully";
+    if ($stmt->execute()) {
+      echo "<script>alert('Preferences submitted successfully!')</script>";
+      echo "<script>window.location.href='login.php';</script>"; // Redirect to login page
+      exit(); // Stop script execution after successful insertion and redirect
     } else {
-        echo "Error: " . $stmt->error;
+      $errors[] = "Error inserting preferences: " . $stmt->error;
     }
-
-    // Close statement and connection
-    $stmt->close();
-    $conn->close();
+  }
 }
+}
+
 ?>

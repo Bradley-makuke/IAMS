@@ -127,25 +127,22 @@ if($_SERVER ["REQUEST_METHOD"] === "POST"){
          
      $stmt->bind_param("ssssss", $username, $email, $firstname, $surname, $student_id, $phone_number);
 
-     if($stmt->execute()){
-        echo("record inserted");
-        echo "<br>";
-     }
-     else{
-        echo "Error inserting record:". $stmt->error;
-     }
 
      $use = $conn->prepare("INSERT INTO user(username, email, user_type, password) VALUES(?,?,?,?)");
      $use->bind_param("ssss",$username, $email, $user_type, $hashedpassword);
 
-     if($use->execute()){
-        echo("record inserted");
-
+     if($stmt->execute() && $use->execute()){
+      echo "<script>alert('Record inserted successfully')</script>";
+      echo "<script>window.location.href='preference.html';</script>";
+      session_start();
+      $_SESSION["username"] = $username;
+      exit();
      }
      else{
-        echo "Error inserting record:". $use->error;
+      echo "<script>alert('Error inserting record: " . $stmt->error . "')</script>";
      }
 
+    
 }
 
 
