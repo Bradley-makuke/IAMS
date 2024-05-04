@@ -1,81 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Preferences.css">
-    <title>Preferences</title>
-</head>
-<body>
-    
-    <div class="container">
-        <img src="images/UBotswana.png" alt="UB logo">
-        <div id="form-container">
-            <form action="" method="post">
-                <h3>Preferences</h3>
-                <div class="select-container">
-                    <label for="interest">Interest:</label>
-                    <select id="interest" name="interest list"> 
-                        <option value=>Students interest...</option>
-                        <option value="networking">Networking</option>
-                        <option value="cybersecurity">Cybersecurity</option>
-                        <option value="web development">Web development</option>
-                        <option value="data Analytics">Data Analytics</option>
-                        <br>
-                    </select>
-                    <br>
-                        <label for="role">Type of Role:</label>
-                        <select id="role" name="roles"> 
-                            <option value=>Roles...</option>
-                            <option value="networking">Design and Implementation</option>
-                            <option value="cybersecurity">Artificial intelligence</option>
-                            <option value="web development">Developer</option>
-                            <option value="data Analytics">Systems Engineering</option>
-                        </select><br>
+<?php
+// Include configuration file (replace with your database connection details)
+include "configure.php";
 
-                        <label for="location" >Location of attachment:</label>
-                        <select id="location" name="location list" > 
-                            <option value=>Location...</option>
-                            <option value="networking">Gaborone</option>
-                            <option value="cybersecurity">Kanye</option>
-                            <option value="web development">Palapye</option>
-                            <option value="data Analytics">Atlanta</option>
-                        </select><br>
-                        <label for="kind of project">Kind of project:</label>
-                        <select id="project" name="project list" > 
-                            <option value=>Projects...</option>
-                            <option value="networking">Documenting software and systems.</option>
-                            <option value="cybersecurity">Maintaining and updating an existing application.</option>
-                            <option value="web development">Research and development in a specific area of CS.</option>
-                            <option value="data Analytics">Developing a new application or features  of apps.</option>
-                        </select><br>
+$errors = array(); // Array to store any errors encountered
 
-                        <label for="needs" >Special Needs:</label>
-     <select id="needs" name="Special needs" > 
-         <option value=>special needs...</option>
-         <option value="networking">Extended time on tests and assignments</option>
-         <option value="cybersecurity">Adaptive learning software.</option>
-         <option value="web development"> Accessible workstations and workspaces.</option>
-         <option value="data Analytics"> A quiet, low-distraction work environment.</option>
-     </select><br>
-                   
+// Process form data
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-     <div class="select-container-button">
-        <a href="stureg.php"><button type="submit" >Previous</button></a>
-        <a href="stuhome.html"><button type="submit">Next</button></a>
-    </div>
-    
-        </div>
-               
-                    
-            </form>
-        </div>
-        <div id="band"></div>
-        <div id="image-container">
-            <img src="images/students.jpg" alt="image of students">
-        </div>
-    </div>
-    
+    session_start();
+    if (!isset($_SESSION["username"])) {
+      $errors[] = "Session error: Username not found.";
+    }
+    else{
+        $username = $_SESSION["username"];
+   
+    // Validate and sanitize input
+    $skills = isset($_POST["skills"]) ? implode(",", $_POST["skills"]) : "";
+    $preferred_locations = isset($_POST["locations"]) ? implode(",", $_POST["locations"]) : "";
+    $preferred_projects = isset($_POST["preferred_projects"]) ? $_POST["preferred_projects"] : "";
 
-</body>
-</html>
+    // Insert into database
+    $sql = "INSERT INTO company_preferences (username, skills, locations, projects) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss",$username, $skills, $preferred_locations, $preferred_projects);
+
+    if ($stmt->execute()) {
+        // Success - redirect to login page
+        echo "<script>alert('Preferences submitted successfully!')</script>";
+        echo "<script>window.location.href='login.html';</script>";
+        exit();
+    } else {
+        // Error - display error message
+        $errors[] = "Error inserting preferences: " . $stmt->error;
+    }
+}
+}
+
+// If there are errors, display them and redirect back to the form
+if (!empty($errors)) {
+    $error_message = implode("<br>", $errors);
+    echo "<script>alert('$error_message')</script>";
+    echo "<script>window.location.href='your_form_page.php';</script>";
+    exit();
+}
+
+
+?>

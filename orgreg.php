@@ -61,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $conn->commit();
       echo "<script>alert('Registration successful!')</script>";
       echo "<script>window.location.href='pref.html';</script>"; // Redirect after success
+      session_start();
+      $_SESSION["username"] = $username;
       exit(); // Stop script execution after successful insertion and redirect
     } catch (Exception $e) {
       // Rollback transaction and display error message

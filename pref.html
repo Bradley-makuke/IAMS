@@ -1,81 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Preferences.css">
-    <title>Preferences</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organization Preferences</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      let locationCount = 1;
+
+      // Function to add location
+      $("#add_location").click(function() {
+        if (locationCount < 4) {
+          locationCount++;
+          $("#locations").append("<div class='location'><label for='location" + locationCount + "'>Location " + locationCount + ":</label><input type='text' name='locations[]' id='location" + locationCount + "' required></div>");
+        } else {
+          alert("Maximum 4 locations allowed.");
+        }
+      });
+
+      // Function to remove location
+      $("#remove_location").click(function() {
+        if (locationCount > 1) {
+          locationCount--;
+          $("#locations").children().last().remove();
+        } else {
+          alert("Minimum 1 location required.");
+        }
+      });
+
+      // Function to toggle other skills input
+      $("#other_skills_checkbox").change(function() {
+        if ($(this).is(":checked")) {
+          $("#other_skills_input").show();
+        } else {
+          $("#other_skills_input").hide();
+        }
+      });
+    });
+  </script>
 </head>
+
 <body>
-    
-    <div class="container">
-        <img src="images/UBotswana.png" alt="UB logo">
-        <div id="form-container">
-            <form action="" method="post">
-                <h3>Preferences</h3>
-                <div class="select-container">
-                    <label for="interest">Interest:</label>
-                    <select id="interest" name="interest list"> 
-                        <option value=>Students interest...</option>
-                        <option value="networking">Networking</option>
-                        <option value="cybersecurity">Cybersecurity</option>
-                        <option value="web development">Web development</option>
-                        <option value="data Analytics">Data Analytics</option>
-                        <br>
-                    </select>
-                    <br>
-                        <label for="role">Type of Role:</label>
-                        <select id="role" name="roles"> 
-                            <option value=>Roles...</option>
-                            <option value="networking">Design and Implementation</option>
-                            <option value="cybersecurity">Artificial intelligence</option>
-                            <option value="web development">Developer</option>
-                            <option value="data Analytics">Systems Engineering</option>
-                        </select><br>
+  <h1>Organization Preferences</h1>
+  <form method="post" action="pref.php">
 
-                        <label for="location" >Location of attachment:</label>
-                        <select id="location" name="location list" > 
-                            <option value=>Location...</option>
-                            <option value="networking">Gaborone</option>
-                            <option value="cybersecurity">Kanye</option>
-                            <option value="web development">Palapye</option>
-                            <option value="data Analytics">Atlanta</option>
-                        </select><br>
-                        <label for="kind of project">Kind of project:</label>
-                        <select id="project" name="project list" > 
-                            <option value=>Projects...</option>
-                            <option value="networking">Documenting software and systems.</option>
-                            <option value="cybersecurity">Maintaining and updating an existing application.</option>
-                            <option value="web development">Research and development in a specific area of CS.</option>
-                            <option value="data Analytics">Developing a new application or features  of apps.</option>
-                        </select><br>
+    <h2>Hard Skills (Select at least 3)</h2>
+    <ul>
+      <li><input type="checkbox" name="skills[]" value="Java"> Java</li>
+      <li><input type="checkbox" name="skills[]" value="Python"> Python</li>
+      <li><input type="checkbox" name="skills[]" value="C++"> C++</li>
+      <li><input type="checkbox" name="skills[]" value="JavaScript"> JavaScript</li>
+      <li><input type="checkbox" name="skills[]" value="SQL"> SQL</li>
+      <li><input type="checkbox" id="other_skills_checkbox" name="other_skills_checkbox"> Other</li>
+      <li id="other_skills_input" style="display: none;"><input type="text" name="other_skills" placeholder="Enter other skills"></li>
+    </ul>
 
-                        <label for="needs" >Special Needs:</label>
-     <select id="needs" name="Special needs" > 
-         <option value=>special needs...</option>
-         <option value="networking">Extended time on tests and assignments</option>
-         <option value="cybersecurity">Adaptive learning software.</option>
-         <option value="web development"> Accessible workstations and workspaces.</option>
-         <option value="data Analytics"> A quiet, low-distraction work environment.</option>
-     </select><br>
-                   
-
-     <div class="select-container-button">
-        <a href="stureg.php"><button type="submit" >Previous</button></a>
-        <a href="stuhome.html"><button type="submit">Next</button></a>
+    <h2>Locations (Minimum 1, Maximum 4)</h2>
+    <div id="locations">
+      <div class="location">
+        <label for="location1">Location 1:</label>
+        <input type="text" name="locations[]" id="location1" required>
+      </div>
     </div>
-    
-        </div>
-               
-                    
-            </form>
-        </div>
-        <div id="band"></div>
-        <div id="image-container">
-            <img src="images/students.jpg" alt="image of students">
-        </div>
-    </div>
-    
+    <button type="button" id="add_location">Add Location</button>
+    <button type="button" id="remove_location">Remove Location</button>
 
+    <h2>Preferred Projects (Optional)</h2>
+    <textarea name="preferred_projects" rows="5" cols="30"></textarea>
+
+    <br>
+    <input type="submit" value="Save Preferences">
+  </form>
 </body>
+
 </html>
