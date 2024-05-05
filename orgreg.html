@@ -3,26 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="orgreg.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
     <title>Company Registration</title>
 </head>
 <body>
-    <h1>Company Sign Up</h1>
+  <div class="container">
+    <div class="form-container">
+    
     <form method="post" action="orgreg.php">
-  
+      
+      
+      <div class="heading">
+        <p>Already have an account? <a href="login.php">Sign in</a></p>
+        <h2>Company Sign Up</h2>
+        </div>
+        <div class="normal">
       <p>Company Name:</p>
-      <input type="text" name="company_name" required>
-  
+      <input type="text" name="company_name" pattern="^[a-zA-Z0-9\s]*$" class="others" placeholder="Enter Username" id="name">
+      <p class="text name">Only alphabets</p>
+    </div>
+    <div class="normal">
       <p>Email Address:</p>
-      <input type="email" name="email" required>
-  
+      <input type="email" name="email" id="email" class="others" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="Enter email">
+      <p class="text">Enter valid email</p>
+    </div>
+    <div class="two-forms"> 
+      <div class="normal">
       <p>Password:</p>
-      <input type="password" name="password" required>
-  
+      <input type="password" name="password"  placeholder="Enter Password" pattern=".{8,}" class="line" id="password">
+      <i class="fa-solid fa-eye"  onclick="togglePasswordVisibility('password')"></i> 
+      <p class="pass" id="passwordError">Should be longer than 8 digits</p>
+    </div>
+      <div class="normal">
       <p>Confirm Password:</p>
-      <input type="password" name="confirm_password" required>
-  
+      <input type="password" name="confirm_password" id="confirm_password" pattern=".{8,}" placeholder="Confirm Password" class="line">
+      <i class="fa-solid fa-eye" onclick="togglePasswordVisibility('confirm_password')"></i> 
+      <p class="pass" id="passwordError">Should be longer than 8 digits</p>
+    </div>
+  </div>
       <br>
-      <input type="submit" value="Sign Up">
+      <button type="submit">Next</button>
+      
     </form>
+  </div>
+  </div>
 </body>
+<script>
+
+  var firstNameInputElement = document.getElementById("fname");
+  var firstNameTextElement = firstNameInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the first name input
+  var firstNameContainer = firstNameInputElement.parentElement;
+  
+  firstNameInputElement.addEventListener("input", function() {
+      var inputValue = firstNameInputElement.value.trim();
+      if (!/^[a-zA-Z]*$/.test(inputValue)) {
+          firstNameTextElement.textContent = "Enter only alphabets";
+          firstNameTextElement.style.display = "block";
+          firstNameContainer.classList.add("input-container");
+      } else {
+          firstNameTextElement.style.display = "none";
+          firstNameContainer.classList.remove("input-container");
+      }
+  });
+  
+  firstNameInputElement.addEventListener("focus", function() {
+      if (firstNameInputElement.value.trim() === "") {
+          firstNameTextElement.textContent = "Enter Firstname";
+          firstNameTextElement.style.display = "block";
+          firstNameContainer.classList.add("input-container");
+      }
+  });
+  
+  // Error handling for the surname
+  var surnameInputElement = document.getElementById("sname");
+  var surnameTextElement = surnameInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the surname input
+  var surnameContainer = surnameInputElement.parentElement;
+  
+  surnameInputElement.addEventListener("input", function() {
+      var surnameValue = surnameInputElement.value.trim();
+      if (!/^[a-zA-Z]*$/.test(surnameValue)) {
+          surnameTextElement.textContent = "Enter only alphabets";
+          surnameTextElement.style.display = "block";
+          surnameContainer.classList.add("input-container");
+      } else {
+          surnameTextElement.style.display = "none";
+          surnameContainer.classList.remove("input-container");
+      }
+  });
+  
+  surnameInputElement.addEventListener("focus", function() {
+      if (surnameInputElement.value.trim() === "") {
+          surnameTextElement.textContent = "Enter Surname";
+          surnameTextElement.style.display = "block";
+          surnameContainer.classList.add("input-container");
+      }
+  });
+
+  // error handling for username
+
+  var usernameInputElement = document.getElementById("name");
+  var usernameTextElement = usernameInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the username input
+  var usernameContainer = usernameInputElement.parentElement;
+  
+  usernameInputElement.addEventListener("input", function() {
+      var usernameValue = usernameInputElement.value.trim();
+      
+      // Check if username contains at least one letter and one digit, and no white spaces
+      if (!/(?=.*[a-zA-Z])(?=.*\d)^[a-zA-Z0-9]+$/.test(usernameValue)) {
+          usernameTextElement.textContent = "Username must contain at least one letter and one digit, and no white spaces";
+          usernameTextElement.style.display = "block";
+          usernameContainer.classList.add("input-container");
+      } else {
+          usernameTextElement.style.display = "none";
+          usernameContainer.classList.remove("input-container");
+      }
+  });
+  
+  usernameInputElement.addEventListener("focus", function() {
+      if (usernameInputElement.value.trim() === "") {
+          usernameTextElement.textContent = "Enter Username";
+          usernameTextElement.style.display = "block";
+          usernameInputElement.classList.add("input-container");
+      }
+  });
+   // validating the email
+   var emailInputElement = document.getElementById("email");
+var emailTextElement = emailInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the email input
+var emailContainer = emailInputElement.parentElement;
+
+emailInputElement.addEventListener("input", function() {
+  var emailValue = emailInputElement.value.trim();
+  
+  // Check if the input matches the email pattern
+  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
+      emailTextElement.textContent = "Enter a valid email";
+      emailTextElement.style.display = "block";
+      emailContainer.classList.add("input-container");
+  } else {
+      emailTextElement.style.display = "none";
+      emailContainer.classList.remove("input-container");
+  }
+});
+
+emailInputElement.addEventListener("focus", function() {
+  if (emailInputElement.value.trim() === "") {
+      emailTextElement.textContent = "Enter email";
+      emailTextElement.style.display = "block";
+      emailInputElement.classList.add("input-container");
+  }
+});
+
+// error handling for phone number 
+var phoneNumberInputElement = document.getElementById("number");
+var phoneNumberTextElement = phoneNumberInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the phone number input
+var phoneNumberContainer = phoneNumberInputElement.parentElement;
+
+phoneNumberInputElement.addEventListener("input", function() {
+  var phoneNumberValue = phoneNumberInputElement.value.trim();
+  
+  // Check if the input is 8 digits long
+  if (phoneNumberValue !== "" && !/^\d{8}$/.test(phoneNumberValue)) {
+      phoneNumberTextElement.textContent = "Phone number must be 8 digits long";
+      phoneNumberTextElement.style.display = "block";
+      phoneNumberContainer.classList.add("input-container");
+  } else {
+      phoneNumberTextElement.style.display = "none";
+      phoneNumberContainer.classList.remove("input-container");
+  }
+});
+
+phoneNumberInputElement.addEventListener("focus", function() {
+  if (phoneNumberInputElement.value.trim() === "") {
+      phoneNumberTextElement.textContent = "Enter phone number";
+      phoneNumberTextElement.style.display = "block";
+      phoneNumberInputElement.classList.add("input-container");
+  }
+});
+
+// Code to show the password when the button is clicked
+function togglePasswordVisibility(inputId) {
+  const input = document.getElementById(inputId);
+  const icon = input.nextElementSibling; // Assuming the icon is always the next sibling
+  if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
+  } else {
+      input.type = 'password';
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
+  }
+}
+
+// Validate password strength and confirmation
+
+      const passwordInput = document.getElementById('password');
+      const confirmInput = document.getElementById('confirm_password');
+      const passwordStrengthText = document.getElementById('passwordError');
+      const confirmErrorText = document.getElementById('confirmError');
+
+      passwordInput.addEventListener('input', validatePassword);
+      confirmInput.addEventListener('input', validateConfirmation);
+
+          function validatePassword() {
+              const password = passwordInput.value;
+              const hasLetter = /[a-zA-Z]/.test(password);
+              const hasNumber = /\d/.test(password);
+              const hasSpecialChar = /[!@#$%^&*()_+={}\[\]:;<>,.?~]/.test(password);
+          
+              if (password === "") {
+                  passwordStrengthText.textContent = 'Enter password';
+                  passwordStrengthText.style.color = 'red';
+                  passwordStrengthText.style.display = 'block';
+              } else if (password.length <=8 || password.length >= 8 && (hasLetter && !hasNumber && !hasSpecialChar) || (!hasLetter && hasNumber && !hasSpecialChar) || (!hasLetter && !hasNumber && hasSpecialChar)) {
+                  passwordStrengthText.textContent = 'Password is weak';
+                  passwordStrengthText.style.color = 'red';
+                  passwordStrengthText.style.display = 'block';
+              } else if (password.length >= 8 && (hasLetter && hasNumber && !hasSpecialChar) || (hasLetter && !hasNumber && hasSpecialChar) || (!hasLetter && hasNumber && hasSpecialChar)) {
+                  passwordStrengthText.textContent = 'Password is medium';
+                  passwordStrengthText.style.color = 'orange';
+                  passwordStrengthText.style.display = 'block';
+              } else {
+                  passwordStrengthText.textContent = 'Password is strong';
+                  passwordStrengthText.style.color = 'green';
+                  passwordStrengthText.style.display = 'block';
+              }
+          
+          
+      }
+
+      function validateConfirmation() {
+          const confirmPassword = confirmInput.value;
+          const originalPassword = passwordInput.value;
+
+          if (confirmPassword !== originalPassword) {
+              confirmErrorText.textContent = 'Passwords do not match';
+              confirmErrorText.style.color = 'red';
+              confirmErrorText.style.display = 'block';
+          } else {
+              confirmErrorText.textContent = ''; // Clear the error message
+              confirmErrorText.style.display = 'none';
+          }
+      }
+
+      // Function to calculate and adjust the height of the form container
+function adjustFormContainerHeight() {
+  const formContainer = document.querySelector('.form-container');
+  const button = document.querySelector('button');
+
+  // Get the height of the button and add 30px for the desired spacing
+  const buttonHeight = button.offsetHeight + 30;
+
+  // Set the height of the form container to accommodate the button
+  formContainer.style.height = `calc(80% - ${buttonHeight}px)`;
+}
+
+// Call the function whenever an input field is focused or blurred
+const inputFields = document.querySelectorAll('input');
+inputFields.forEach(input => {
+  input.addEventListener('focus', adjustFormContainerHeight);
+  input.addEventListener('blur', adjustFormContainerHeight);
+});
+
+</script>    
 </html>
