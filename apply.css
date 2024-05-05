@@ -334,17 +334,7 @@
   .dropdown:hover .dropbtn {
     background-color: #828682;
   }
-  /* .submit-btn {
-    position:absolute; 
-    padding: 7px;
-    border-style: none;
-    text-align: center;
-    margin-left: 50px;
-    background-color: rgb(56, 241, 56);
-    border-radius: 13px;
-    margin-bottom: 100px;
-  } */
-  /*Centering the apply button div*/
+ 
   .center-btn{
     text-align: center;
   }
@@ -361,4 +351,28 @@
 
   .apply-link{
     color: white;
+  }
+  .upload-container{
+    border-style: dashed;
+    border-width: 2px;
+    border-radius: 10px;
+  }
+  
+
+  #file-chosen1{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+    font-size: 18px;
+  }
+
+  #file-chosen2{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+    font-size: 18px;
+  }
+
+  #file-chosen3{
+    margin-left: 0.3rem;
+    font-family: sans-serif;
+    font-size: 18px;
   }
