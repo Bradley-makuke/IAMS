@@ -1,137 +1,136 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #7F0714;
-}
- .container{
-    width: 600px;
-    border: 1px solid wheat;
-    height: 450px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
- }
- #image-container{
-    width: 40%;
-    height: 90%;
-    
-    border-radius: 5px;
-    margin-top: 2.5%;
- }
- #image-container img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
- }
- #form-container{
-    width: 59%;
-    height: 100%;
-    position: relative;
-    left: 41%;
-    top: -93%;
-    border-radius: 5px;
-    opacity: 0.9;
- }
- #form-container p{
-    float: right;
-    margin-right: 10px;
-    font-size: 0.9rem;
- }
- p a{
-    text-decoration: none;
-    color: blue;
- }
- p a:hover{
-    font-size: 1rem;
- }
- form{
-    clear: both;
-    text-align: center;
- }
-form h3{
-    margin-bottom: 50px;
-    margin-top: 60px;
-    color: blue;
-}
- .input-container{
-width: 200px;
-height: 30px;
-border-bottom: 1px solid gainsboro;
-margin-left: 60px;
-margin-bottom: 20px;
-background-color: white;
-padding-top: 4px;
-padding-left: 3px;
-
- }
-
- input{
-    border: none transparent;
-    outline: none;
-    background-color: inherit;
-}
-.input-container:last-child{
-    padding-left: 0px;
-    padding-top: 0px;
-    height: 40px;
-}
-button{
-    width: 100%;
-    height: 100%;
-    background-color: blue;
-    color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover{
-    height: 43px;
-    font-size: 1.2rem;
-    box-shadow: 2px 2px 5px 3px grey;
-}
-.fa-eye-slash, .fa-eye{
-   position: relative;
-   top: -18px;
-   left: 30%;
-   cursor: pointer;
-  }
-
-  .hidden {
-   display: none;
- }
- 
- #popup {
-   position: fixed;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   background-color: white;
-   padding: 20px;
-   border-radius: 5px;
-   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-   z-index: 10; /* Ensure popup is above other elements */
- }
- 
- .popup-content {
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    text-align: center;
- }
- 
- #popup button {
-   background-color: blue;
-   color: white;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 5px;
-   cursor: pointer;
-   width: 150px;
- }
+   background: url(students.jpg) no-repeat;
+   background-attachment: fixed;
+   background-position: center;
+   background-size: 100% 100%;
 
- .error{
-   font-size:0.7rem;
+}
+.container{
+   width: 800px;
+   height: 800px;
+   display: flex;
+   flex-direction: row;
+   position: absolute;
+   top:15%;
+   left: 30%;
+
+}
+
+.form-container{
+   width: 59%;
+   height: 60%;
+   border: 1px solid white;
+   background: transparent;
+   border: 2px solid rgba(255, 255, 255, .5);
+   border-radius: 20px;
+   backdrop-filter: blur(20px);
+   box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+}
+form{
+   width: inherit;
+   height: inherit;
+}
+.text{
+   font-size: 0.85rem;
    color: red;
- }
+   position: relative;
+   display: none;
+}
+.input-container{
+   width: 100%;
+   height: 70px;
+
+}
+input:focus{
+  height: 34px;
+}
+
+.normal input{
+  height: 34px;
+}
+.two-forms{
+display: flex;
+gap:0px;
+}
+
+.line{
+   width: 200px;
+   height: 34px;
+   
+}
+.line:nth-of-type(odd){
+   margin-left: 20px;
+}
+input{
+   border:1px solid black;
+   border-radius: 5px;
+   width: 300px;
+   height: 34px;
  
+}
+.normal{
+   width: 100%;
+ margin-bottom: 20px;
+   position: relative;
+}
+.normal2 {
+  width: 50%;
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: row; /* Display items in a row */
+  gap: 45px; /* Adjust this value to increase or decrease the space between the boxes */
+}
+
+.others{
+   position: relative;
+   left: 20px;
+   width: 430px;
+}
+
+button{
+   width: 200px;
+   height: 34px;
+   border-radius: 20px;
+   border: 0;
+    outline: none;
+  background: linear-gradient(to right, purple, red);
+   color: white;
+   position: relative;
+   left: 35%;
+   cursor:pointer;
+   top: 20px;
+   
+}
+button a{
+   color: white;
+   font-size: 1.2rem;
+   text-decoration: none;
+}
+.heading{
+   text-align:center;
+   position: relative;
+   left: 35%;
+   width: 100%;
+}
+.fa-eye, .fa-eye-slash{
+  position: absolute;
+  left: 200px;
+  top:10px;
+}
+
+.pass{
+  font-size: 0.85rem;
+  color: red;
+  position: absolute;
+  top:34px;
+  left: 30px;
+  display: none;
+  
+}
