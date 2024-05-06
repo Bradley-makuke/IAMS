@@ -7,8 +7,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="add_vacancy.css" />
-    <title>Add Vacancies</title>
+    <link rel="stylesheet" href="s_profile.css" />
+    <title>My Profile</title>
   </head>
   <body>
     <div class="row">
@@ -30,6 +30,12 @@
 
       <div class="column2">
     <header>
+      <div class="searchbar">
+          <form>
+            <input type="text" name="text" class="searchbox" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass" style="color: #2309ec;"></i>
+          </form>
+        </div>
 
       <div class="profile-container">
         
@@ -42,7 +48,13 @@
         <div class="profile-menu" id="myDropdown">
           <ul>
             <br />
+            <li><a href="#">Accessibility</a></li>
+            <br />
+            <hr />
+            <br />
             <li><a href="#">Profile</a></li>
+            <br />
+            <li><a href="#">Private files</a></li>
             <br />
             <hr />
             <br />
@@ -59,15 +71,20 @@
   </div>
 
   <main>
+    <div class="user-icon">
+      <i class="fa-regular fa-user"></i>
+    </div>
+    <h2>@Username</h2><br><br>
+    <div class="p-info">
+    <p><em><b>Personal Information: </b></em></p><br><br>
+    <p>Email Address: </p><br><br>
+    <p>Contact Number: </p><br><br>
+    </div>
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      <label>Organization Username:</label> <input type="text" name="name" value="<?php echo $organisation;?>" placeholder="Enter Name"/><br><br>
-      <label>Number of vacancies:</label> <input type="number" name="no_of_vacancies" placeholder="Enter Number" required/><br><br>
-      <input type="submit" name="Submit"/>
-    </form>
     
   </main>
-  
+
+
     <footer>
       <div id="left-links">
         <i class="fa-solid fa-headset"></i>
@@ -101,60 +118,42 @@
           drop.style.display = "none";
         }
       }
-
-
-
     </script>
   </body>
 </html>
 
+<?php
+  $dbhost= 'localhost';
+  $dbuser= 'root';
+  $dbpass= '';
+  $dbname= 'code';
 
-<?php 
-
-// Create the connection to the database
-$servername = "10.0.19.74";
-$username = "tsu00073";
-$password = "tsu00073";
-$dbname = "db_tsu00073";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+  $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-echo "Connection successful!!";
+// update data in the database
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["id"])) {
+    $id = $_POST["id"];
+    $testname = $_POST["name"];
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  session_start();
-  if(!isset($_SESSION['username'])){
-    echo 'Session error: User not found';
-  }
-  else{
-    $organisation = $_SESSION['username'];
-
- 
-     //Collecting and Validating vacancies
-     $vacancy = $_POST["vacancies"];
-
-     $stmt = $conn->prepare("INSERT INTO organisation (vacancies) WHERE username= $organisation VALUES(?)");
-
-$stmt->bind_param("s",$vacancy);
-
-if ($stmt->execute()) {
-    echo "Data inserted successfully!";
-} else {
-    echo "Error: " . $conn->error;
-}
+    $stmt = $conn->prepare("UPDATE test SET name=? WHERE id=?");
+    if ($stmt) {
+        $stmt->bind_param("ss", $testname, $id);
+        if ($stmt->execute()) {
+            echo "Record successfully updated";
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+        $stmt->close();
+    } else {
+        echo "Error preparing update statement: " . $conn->error;
     }
 }
 
-
-
-
-$stmt->close();
-
+// Close the database connection
 $conn->close();
 ?>
