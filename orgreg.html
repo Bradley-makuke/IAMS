@@ -3,26 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="orgreg.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
     <title>Company Registration</title>
 </head>
 <body>
-    <h1>Company Sign Up</h1>
+    <div class="container">
+    <div class="form-container">
+    
     <form method="post" action="orgreg.php">
-  
+      
+      
+      <div class="heading">
+        <p>Already have an account? <a href="login.php">Sign in</a></p>
+        <h2>Company Sign Up</h2>
+        </div>
+        <div class="normal">
       <p>Company Name:</p>
-      <input type="text" name="company_name" required>
-  
+      <input type="text" name="company_name" pattern="^[a-zA-Z0-9\s]*$" class="others" placeholder="Enter Username" id="name">
+      <p class="text name">Only alphabets</p>
+    </div>
+    <div class="normal">
       <p>Email Address:</p>
-      <input type="email" name="email" required>
-  
+      <input type="email" name="email" id="email" class="others" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="Enter email">
+      <p class="text">Enter valid email</p>
+    </div>
+    <div class="two-forms"> 
+      <div class="normal">
       <p>Password:</p>
-      <input type="password" name="password" required>
-  
+      <input type="password" name="password"  placeholder="Enter Password" pattern=".{8,}" class="line" id="password">
+      <i class="fa-solid fa-eye"  onclick="togglePasswordVisibility('password')"></i> 
+      <p class="pass" id="passwordError">Should be longer than 8 digits</p>
+    </div>
+      <div class="normal">
       <p>Confirm Password:</p>
-      <input type="password" name="confirm_password" required>
-  
+      <input type="password" name="confirm_password" id="confirm_password" pattern=".{8,}" placeholder="Confirm Password" class="line">
+      <i class="fa-solid fa-eye" onclick="togglePasswordVisibility('confirm_password')"></i> 
+      <p class="pass" id="passwordError">Should be longer than 8 digits</p>
+    </div>
+  </div>
       <br>
-      <input type="submit" value="Sign Up">
+      <button type="submit">Next</button>
+      
     </form>
+  </div>
+  </div>
 </body>
 </html>
