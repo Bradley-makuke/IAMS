@@ -1,9 +1,9 @@
 <?php
 // Database connection and coordinator details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "code";
+$servername = "10.0.19.74";
+$username = "tsu00073";
+$password = "tsu00073";
+$dbname = "db_tsu00073";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
