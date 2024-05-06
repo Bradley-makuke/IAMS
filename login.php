@@ -2,7 +2,7 @@
 session_start();
 
 // Database connection
-$conn = new mysqli("localhost", "root", "", "code");
+$conn = new mysqli("10.0.19.74", "tsu00073", "tsu00073", "db_tsu00073");
  
 // Check connection
 if ($conn->connect_error) {
