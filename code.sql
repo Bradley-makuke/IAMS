@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2024 at 08:56 AM
+-- Generation Time: May 06, 2024 at 02:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,6 +66,51 @@ INSERT INTO `applicant` (`studentId`, `firstname`, `lastname`, `email`, `resume_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `company_preferences`
+--
+
+CREATE TABLE `company_preferences` (
+  `company_name` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `skills` varchar(255) NOT NULL,
+  `locations` varchar(255) NOT NULL,
+  `projects` text NOT NULL,
+  `available_slots` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `company_preferences`
+--
+
+INSERT INTO `company_preferences` (`company_name`, `email`, `skills`, `locations`, `projects`, `available_slots`) VALUES
+('', '', 'Java,Python,C++', 'Gaborone,Lobatse', '', ''),
+('', '', 'C++,JavaScript,SQL', 'Mahalapye', 'Free Masonry', ''),
+('Nthabi', '', 'Python,JavaScript', 'Gaborone,Mahalapye,Kanye', 'Snow bunny', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coordinator`
+--
+
+CREATE TABLE `coordinator` (
+  `username` varchar(50) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `surname` varchar(50) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone_number` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coordinator`
+--
+
+INSERT INTO `coordinator` (`username`, `firstname`, `surname`, `email`, `phone_number`) VALUES
+('Coordinat0r', 'Mookamedi', 'Overseer', 'Coor@din.ator', '78777576');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `education`
 --
 
@@ -96,25 +141,41 @@ CREATE TABLE `education` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `matches`
+--
+
+CREATE TABLE `matches` (
+  `company` varchar(255) NOT NULL,
+  `student` varchar(255) NOT NULL,
+  `skills` varchar(255) DEFAULT NULL,
+  `locations` varchar(255) DEFAULT NULL,
+  `projects` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `organisation`
 --
 
 CREATE TABLE `organisation` (
   `username` varchar(250) NOT NULL,
-  `email` varchar(250) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `email` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `organisation`
 --
 
-INSERT INTO `organisation` (`username`, `email`, `password`) VALUES
-('BIHL', 'info@bihl.co.bw', '$2y$10$AhYml4grUAlinTehqZlfGOpe1JGtWRNA59V/vEseL4tuM1NTHZnkC'),
-('botswood', 'bots@wood.bw', '$2y$10$zQH7LELqtfopiX63W3UpsuPL9zWdQCo4h1jKnTA9BsyHMJxKHn2Ky'),
-('CEDA', 'adim@ceda.co.bw', '$2y$10$gBY6TgLaBwD.o2muuzyzDuqG257QpMn13Z2Iot9Kdzsq4dwKl6TMS'),
-('mymom', 'mamam@yonko.piece', '$2y$10$OGHF88gXKjH/Z9LaP1Opvuxj1Bap/G.AX8Hz2la9SWINT8ma0Cj0e'),
-('ojoiji', 'info@botswood.co.bw', '$2y$10$jeeZSnQxR7xcx6YO6DKfsusks2oIQB61GbQP4q/N37sQOkCA2VM6a');
+INSERT INTO `organisation` (`username`, `email`) VALUES
+('CEDA', 'adim@ceda.co.bw'),
+('Amaree', 'Am@ar.ee'),
+('botswood', 'bots@wood.bw'),
+('BIHL', 'info@bihl.co.bw'),
+('ojoiji', 'info@botswood.co.bw'),
+('LongWood', 'Long@Wo.od'),
+('mymom', 'mamam@yonko.piece'),
+('Nthabi', 'Nt@ha.bi');
 
 -- --------------------------------------------------------
 
@@ -125,23 +186,50 @@ INSERT INTO `organisation` (`username`, `email`, `password`) VALUES
 CREATE TABLE `student` (
   `username` varchar(50) NOT NULL,
   `email` varchar(250) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `surname` varchar(50) NOT NULL,
   `studentId` varchar(9) NOT NULL,
-  `phoneNumber` text NOT NULL,
-  `password` varchar(255) NOT NULL
+  `phone_number` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`username`, `email`, `studentId`, `phoneNumber`, `password`) VALUES
-('Bosele', '', '202020987', '0', '$2y$10$mWQMdwYvk/TMnxB79APrq.SmurHdWd4a9XjP.cb0ajpU8NxTMlD9y'),
-('Ogone', '202100073@ub.ac.bw', '202100073', '72552152', '$2y$10$lxtgoiQjC49vqCyP5hTqNOM.0TTOMJ/Zah/.vZ81FKqxT1jHeV2RS'),
-('amantle', '', '202101619', '0', '$2y$10$mizxIG5vjaFzChIEcWxqmOc/30oHiGqZuxGSTZ9iObHF7gz9oDl5m'),
-('bradley', '', '202103045', '0', '$2y$10$H87/kl52a3XRk7wxOHFX1uHgB84zpa2DFkyl4ZRD2QzQAT8fTo7RG'),
-('Rachel', '', '202309089', '0', '$2y$10$l8RxyXI2km9IkoYHYUv9EuXbCNR.c4PpEurgisLE7.xIO/tBBhAee'),
-('hahahaha', '', '292020202', '0', '$2y$10$A1q3uttAXHQLG8De2sQ6FudAIEj0S5JLd6OxQx0CFT2WwBRPJunHm'),
-('123', '112@as.as', '345678908', '123456456', '$2y$10$kxlvf8hX/TCi58jupxL2duXqy98uC6ocWy.6ftcxHjreUWPkoojOe');
+INSERT INTO `student` (`username`, `email`, `firstname`, `surname`, `studentId`, `phone_number`) VALUES
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('JJBA2', 'jj@ba.bw', 'Joe', 'Joe', 'Joe', '12345678'),
+('m3n', 'na@hm.an', 'nah', 'man', '989898989', '90898978'),
+('thabang2', 'tha@ba.ng', 'thabang', 'makuke', '201600898', '76191050');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_preferences`
+--
+
+CREATE TABLE `student_preferences` (
+  `username` varchar(50) NOT NULL,
+  `skills` varchar(255) NOT NULL,
+  `locations` varchar(255) NOT NULL,
+  `projects` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_preferences`
+--
+
+INSERT INTO `student_preferences` (`username`, `skills`, `locations`, `projects`) VALUES
+('', 'Java,Python,C++', 'Lobatse, Gaborone', 'Web Development, Software Development'),
+('thabang2', 'Java,Python,JavaScript', 'Lobatse', 'System Administration');
 
 -- --------------------------------------------------------
 
@@ -155,6 +243,19 @@ CREATE TABLE `user` (
   `user_type` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`username`, `email`, `user_type`, `password`) VALUES
+('Amaree', 'Am@ar.ee', 'organisation', '$2y$10$qdfp7UVMudAJkFy8NjJ0i.KGrE43paAKVAKl8MNwBcfOJzY0h5mNC'),
+('Coordinator', 'Coor@din.ator', 'coordinator', '$2y$10$RZSYWi3GtMCsgx30YkBi7.kRDq75bb0fxGorp.3YqQPjWP60539gi'),
+('JJBA2', 'jj@ba.bw', 'student', '$2y$10$FKjxWCY1AUXn2oW22pSZ5uVRKgHoFfUt6pjofPAiPIZWNwB8u2t.O'),
+('LongWood', 'Long@Wo.od', 'organisation', '$2y$10$zY3QUbYbAkNTiG3GW8PNbe00wpvxbMA0xG7NklB8RQLFwg1CnhYqS'),
+('m3n', 'na@hm.an', 'student', '$2y$10$sDqCr2Ycl37T8Nkxytq5xucOdxhfohOSd8jWZdlJ18TJGIFMvAsbC'),
+('Nthabi', 'Nt@ha.bi', 'organisation', '$2y$10$IFYxRuXrgnBtbJx9Q51.7OKfaa/..L9aPZLwX2SFt.Ze6mbuAfpCu'),
+('thabang2', 'tha@ba.ng', 'student', '$2y$10$Dtxm6vhvgzoh5KxUMg7dCehh7ZXY7U6TpTNqGeJG3r3OKoYMhkHvO');
 
 --
 -- Indexes for dumped tables
@@ -187,12 +288,6 @@ ALTER TABLE `education`
 ALTER TABLE `organisation`
   ADD PRIMARY KEY (`username`),
   ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `student`
---
-ALTER TABLE `student`
-  ADD PRIMARY KEY (`studentId`);
 
 --
 -- Indexes for table `user`
