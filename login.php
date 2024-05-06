@@ -29,10 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Retrieve user data from database
     //$stmt = $conn->prepare("SELECT username, password FROM student WHERE username = ?");
-    $stmt = $conn->prepare("SELECT username, password FROM student WHERE username = ? 
-    UNION 
-    SELECT username, password FROM organisation WHERE username = ?");
-    $stmt->bind_param("ss", $username, $username);
+    $stmt = $conn->prepare("SELECT username, password FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -42,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row["password"])) {
             // Set session variables and redirect to index.php
             $_SESSION['loggedin'] = $row["username"];
-            header("Location: home.html");
-            exit();
+            header("Location:  view_attachments.php");
+            
         } else {
             $errors["password"] = "Incorrect username or password";
         }
@@ -70,7 +68,7 @@ $conn->close();
     <div class="container">
         <img src="images/UBotswana.png" alt="UB logo">
         <div id="form-container">
-            <form action="" method="post" id="login-form">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="login-form">
                 <h3>Log in</h3>
                 <div class="input-container">
                     <input type="text" placeholder="Enter username" required name="username">
