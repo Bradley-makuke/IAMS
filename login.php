@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Retrieve user data from database
     //$stmt = $conn->prepare("SELECT username, password FROM student WHERE username = ?");
-    $stmt = $conn->prepare("SELECT username, password FROM user WHERE username = ?");
+    $stmt = $conn->prepare("SELECT username,user_type, password FROM user WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -40,7 +40,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row["password"])) {
             // Set session variables and redirect to index.php
             $_SESSION['loggedin'] = $row["username"];
-            header("Location:  view_attachments.php");
+            $user_type = $row["user_type"];
+
+            switch ($user_type) {
+                case "student":
+                    header("Location: s_profile.html");
+                    exit;
+                    break;
+                case "organisation":
+                    header("Location: profile.html");
+                    exit;
+                    break;
+                case "coordinator":
+                    header("Location: coordinator.php");
+                    exit;
+                    break;
+                default:
+                    // Handle invalid user type (optional)
+                    $errors["general"] = "Invalid user type";
+                    break;
+            }
+        
             
         } else {
             $errors["password"] = "Incorrect username or password";
