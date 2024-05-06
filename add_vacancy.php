@@ -15,8 +15,8 @@
       <div class="column1">
         <div class="nav">
           <img src="UBlogo.png" alt="website logo" /><br><br><br>
-          <a href="notifications.html"><i class="fa-solid fa-bell"></i>Notifications</a><br />
-          <a href="messages.html"><i class="fa-solid fa-envelope"></i>Messages</a
+          <a href="#"><i class="fa-solid fa-bell"></i>Notifications</a><br />
+          <a href="#"><i class="fa-solid fa-envelope"></i>Messages</a
           ><br />
           <a href="About.html"><i class="fa-solid fa-circle-info"></i>About</a
           ><br />
