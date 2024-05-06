@@ -1,9 +1,9 @@
 <?php
 // Database connection and query
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "code";
+$servername = "10.0.19.74";
+$username = "tsu00073";
+$password = "tsu00073";
+$dbname = "db_tsu00073";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -24,7 +24,7 @@ $result = $conn->query($sql);
 <body>
    
 
-    <h2>Featured Companies</h2>
+    <em><h2>FEATURED COMPANIES</h2></em>
     <div class="carousel">
         <div class="carousel-inner">
             <?php
@@ -32,20 +32,17 @@ $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     $companyName = $row["username"];
                     $logoSrc = "students.jpg";
+                    $vacancy = $row["vacancies"];
                     echo "<div class='carousel-card'>
-                            <img src='$logoSrc' alt='$companyName Logo'>
                             <h3>$companyName</h3>
-                          </div>";
+                            <p>Is looking for $vacancy student attachees for industrial attachment</p>
+                          </div>";  
                 }
             } else {
                 echo "No companies found.";
             }
             $conn->close();
             ?>
-        </div>
-        <a class="prev" onclick="plusSlides(-4)">&#10094;</a>
-        <a class="next" onclick="plusSlides(4)">&#10095;</a>
-    </div>
 
     <script src="append.js"></script>
 </body>
