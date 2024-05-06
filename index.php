@@ -11,10 +11,10 @@
     
     <header id="header">
         <img src="images/UBotswana.png" alt="logo of the school">
-        <div class="searchbar">
-            <input type="search" placeholder="Search by name or industry" id="searchInput">
+        <!--<div class="searchbar">
+            //<input type="search" placeholder="Search by name or industry" id="searchInput">
            <a href="$" id="searchBtn"><i class="fa-solid fa-magnifying-glass" style="color: #5d5e5f;" id="searchIcon"></i> </a> 
-        </div>
+        </div>-->
         <a href="About.html" class="nav-link">About</a>
         <a href="About.html" class="nav-link">Contact</a>
         <a href="view_attachments.php" class="nav-link">View Attachments</a>
