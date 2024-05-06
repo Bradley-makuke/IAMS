@@ -102,7 +102,32 @@
             firstNameContainer.classList.add("input-container");
         }
     });
+    var studentIdInputElement = document.getElementById("student_id");
+var studentIdTextElement = studentIdInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the student_id input
+var studentIdContainer = studentIdInputElement.parentElement;
+
+studentIdInputElement.addEventListener("input", function() {
+    var studentIdValue = studentIdInputElement.value.trim();
     
+    // Check if student ID contains exactly 9 digits
+    if (!/^\d{9}$/.test(studentIdValue)) {
+        studentIdTextElement.textContent = "Student ID must contain exactly 9 digits";
+        studentIdTextElement.style.display = "block";
+        studentIdContainer.classList.add("input-container");
+    } else {
+        studentIdTextElement.style.display = "none";
+        studentIdContainer.classList.remove("input-container");
+    }
+});
+
+studentIdInputElement.addEventListener("focus", function() {
+    if (studentIdInputElement.value.trim() === "") {
+        studentIdTextElement.textContent = "Enter Student ID";
+        studentIdTextElement.style.display = "block";
+        studentIdInputElement.classList.add("input-container");
+    }
+});
+
     // Error handling for the surname
     var surnameInputElement = document.getElementById("sname");
     var surnameTextElement = surnameInputElement.nextElementSibling; // Get the next sibling (the <p> element) of the surname input
