@@ -54,3 +54,91 @@
   </div>
 </body>
 </html>
+<script>
+    // Company Name Validation
+var companyNameInputElement = document.querySelector("input[name='company_name']");
+var companyNameTextElement = companyNameInputElement.nextElementSibling.nextElementSibling; // Get the next sibling (the <p> element) of the company name input
+var companyNameContainer = companyNameInputElement.parentElement;
+
+companyNameInputElement.addEventListener("input", function() {
+    var companyNameValue = companyNameInputElement.value.trim();
+    
+    // Check if company name contains only alphabets
+    if (!/^[a-zA-Z\s]*$/.test(companyNameValue)) {
+        companyNameTextElement.textContent = "Company name must contain only alphabets";
+        companyNameTextElement.style.display = "block";
+        companyNameContainer.classList.add("input-container");
+    } else {
+        companyNameTextElement.style.display = "none";
+        companyNameContainer.classList.remove("input-container");
+    }
+});
+
+// Email Address Validation
+var emailInputElement = document.getElementById("email");
+var emailTextElement = emailInputElement.nextElementSibling.nextElementSibling; // Get the next sibling (the <p> element) of the email input
+var emailContainer = emailInputElement.parentElement;
+
+emailInputElement.addEventListener("input", function() {
+    var emailValue = emailInputElement.value.trim();
+    
+    // Check if email address is valid
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue)) {
+        emailTextElement.textContent = "Enter a valid email address";
+        emailTextElement.style.display = "block";
+        emailContainer.classList.add("input-container");
+    } else {
+        emailTextElement.style.display = "none";
+        emailContainer.classList.remove("input-container");
+    }
+});
+
+// Password Validation
+var passwordInputElement = document.querySelector("input[name='password']");
+var confirmPasswordInputElement = document.querySelector("input[name='confirm_password']");
+var passwordTextElement = passwordInputElement.nextElementSibling.nextElementSibling; // Get the next sibling (the <p> element) of the password input
+var confirmPasswordTextElement = confirmPasswordInputElement.nextElementSibling.nextElementSibling; // Get the next sibling (the <p> element) of the confirm password input
+var passwordContainer = passwordInputElement.parentElement;
+
+passwordInputElement.addEventListener("input", function() {
+    var passwordValue = passwordInputElement.value.trim();
+    
+    // Check if password is at least 8 characters long
+    if (passwordValue.length < 8) {
+        passwordTextElement.textContent = "Password should be longer than 8 characters";
+        passwordTextElement.style.display = "block";
+        passwordContainer.classList.add("input-container");
+    } else {
+        passwordTextElement.style.display = "none";
+        passwordContainer.classList.remove("input-container");
+    }
+    
+    // Check if passwords match
+    if (confirmPasswordInputElement.value.trim() !== "") {
+        if (passwordValue !== confirmPasswordInputElement.value.trim()) {
+            confirmPasswordTextElement.textContent = "Passwords do not match";
+            confirmPasswordTextElement.style.display = "block";
+            confirmPasswordInputElement.parentElement.classList.add("input-container");
+        } else {
+            confirmPasswordTextElement.style.display = "none";
+            confirmPasswordInputElement.parentElement.classList.remove("input-container");
+        }
+    }
+});
+
+confirmPasswordInputElement.addEventListener("input", function() {
+    var passwordValue = passwordInputElement.value.trim();
+    var confirmPasswordValue = confirmPasswordInputElement.value.trim();
+    
+    // Check if passwords match
+    if (passwordValue !== confirmPasswordValue) {
+        confirmPasswordTextElement.textContent = "Passwords do not match";
+        confirmPasswordTextElement.style.display = "block";
+        confirmPasswordInputElement.parentElement.classList.add("input-container");
+    } else {
+        confirmPasswordTextElement.style.display = "none";
+        confirmPasswordInputElement.parentElement.classList.remove("input-container");
+    }
+});
+
+</script>
