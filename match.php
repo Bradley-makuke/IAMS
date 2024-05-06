@@ -1,8 +1,15 @@
 <?php
 include "configure.php";
+session_start(); 
+if (!isset($_SESSION["username"])) {
+      $errors[] = "Session error: Username not found.";
+    }
+else{
+    $username = $_SESSION["username"];
+}
 
 // Get the username of the logged-in user (replace this with your actual logic)
-$logged_in_username = "thabang2";
+$logged_in_username = $username;
 
 // Fetch data from student_preferences for the logged-in user
 $student_preferences_query = "SELECT * FROM student_preferences WHERE username = ?";
