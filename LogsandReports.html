@@ -29,15 +29,10 @@
       </div>
 
       <div class="column2">
-    <header>
-      <div class="searchbar">
-          <form>
-            <input type="text" name="text" class="searchbox" placeholder="Search">
-            <i class="fa-solid fa-magnifying-glass" style="color: #2309ec;"></i>
-          </form>
-        </div>
+        <header>
+        
 
-      <div class="profile-container">
+        <div class="profile-container">
         
         <a href="#"><i class="fa-solid fa-bell"></i></a>
         <a href="#"><i class="fa-solid fa-comment"></i></a>
@@ -47,14 +42,9 @@
         ></a>
         <div class="profile-menu" id="myDropdown">
           <ul>
-            <br />
-            <li><a href="#">Accessibility</a></li>
-            <br />
             <hr />
             <br />
             <li><a href="#">Profile</a></li>
-            <br />
-            <li><a href="#">Private files</a></li>
             <br />
             <hr />
             <br />
@@ -71,17 +61,43 @@
     
     <h1>Logs and Reports</h1>
     <main>
-      <div class="dash-cards">
-        <br><br><br>
-        <a href="browse.html"><i class="fa-solid fa-cloud"></i><h2>Upload Files</h2></a>
-        <br><br><br><br>
-        <p>Choose a file or drag and drop it here</p>
-        <p class="spec"> JPEG, PNG, PDG and MP4 formats. Up to 50MB</p>
-        <br><br>
-        <form action="/action_page.php">
-          <input type="file" id="myFile" name="filename">
+      <div class ="logs-div">
+        <form action="LogsAndReports.php" method="POST">
+          <h1 style="text-align: center;">Logs</h1>
+
+          <label for="industrialSupervisor"> INDUSTRIAL SUPERVISOR:</label>
+          <input type="text" name="industrialSupervisor">
+
+          <label for="organization">ORGANIZATION:</label>
+          <input type="text" name="organization">
+
+          <Label for="date">DATE:</Label>
+          <input type="date" name="date">
+
+          <label for= "description">LOG DESCRIPTION:</label>
+          <textarea name="description" id="description" cols="100" rows="30"></textarea>
+          
           <input type="submit">
+
         </form>
+      </div>
+
+      
+      <div class="report-div">
+        <form action="LogsAndReports.php" method ="POST">
+          <br><br><br>
+        <a href="browse.html"><i class="fa-solid fa-cloud"></i><h2 style="text-align: center;">Upload Report</h2></a>
+        <br><br><br><br>
+        <p class = "form2-text">Choose or drag a file to submit your report here</p>
+        <p class="form2-text" style="color: grey;"> Submit file as a PDF. Up to 50MB</p>
+        <br><br>
+        
+        <input type="file" id="myFile" name="pdfFile" accept=".pdf">
+        
+        <input type="submit">
+
+        </form>
+        
       </div>
 
     </main>
@@ -105,10 +121,8 @@
         <br />
       </div>
       <div id="right-links">
-        <h5>Email</h5>
         <br />
-        <span><i class="fa-solid fa-inbox"></i>info@cs.ub.bw</span>
-      </div>
+        </div>
     </footer>
 
     <script>
