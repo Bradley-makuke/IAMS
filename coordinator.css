@@ -1,0 +1,244 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-color: #f2f3f7;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header{
+  max-width: 100%;
+  height: 150px;
+  background-color: maroon;
+  box-shadow: 0px 0px 6px 0px #d6d6d6; 
+}
+header h3{
+margin: -70px 0px 0px 150px;
+}
+.profile-container{
+  display: flex;
+  position: absolute;
+  left: 83%;
+  top: 5%;
+  margin-top: 20px;
+
+ 
+}
+.profile-container i{
+  margin-top: 10px;
+  color: #2f2d30;
+  font-size: 1.2rem;
+ 
+}
+
+.profile-container a:nth-child(2){
+  margin-right: 15px;
+  margin-left: 20px;
+}
+
+.profile-container span{
+  background-color: #f2f3f7;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 9px;
+  margin-right: 8px;
+}
+.profile-menu{
+  background-color: #ffffff;
+  position: relative;
+  top:50px;
+  left: -190px;
+  width: 225px;
+  display: none;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  z-index: 1;
+  box-shadow: 1px 1px 1px 1px rgb(116, 114, 114);
+}
+.show{
+  display: block;
+}
+.profile-menu li{
+  list-style: none;
+margin-left: 10px;
+  
+}
+.profile-menu hr{
+  width: 100%;
+  margin-left: -1px;
+  opacity: 0.2;
+}
+.profile-menu a{
+  text-decoration: none;
+  color: rgb(44, 43, 43);
+}
+.profile-menu a:hover{
+  color: white;
+}
+.profile-menu li:hover{
+  background-color: #0f6cbf;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  margin-left: 0;
+}
+
+.column1 {
+  float: left;
+  width: 17%;
+  padding: 10px;
+}
+
+.column2 {
+  float: left;
+  width: 83%;
+  padding: 10px;
+} 
+
+.searchbar{
+  float: left;
+  margin-top: 55px;
+  margin-right: 50px;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.searchbox{
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+  width: 200px;
+  font-size: 16px;
+  float: left;
+}
+.searchbar i{
+  position: relative;
+  left: -35px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.search{
+  padding: 10px;
+  width: 102px;
+  border: none;
+  font-size: 16px;
+}
+nav{
+  float: left;
+margin-top: 20px;
+white-space: 10px;
+height: 100%;
+}
+
+img{
+  height: 150px;
+  align-self: center;
+}
+a{
+  text-decoration: none;
+  color: black;
+  margin-bottom: 15px;
+  display: block;
+  padding: 4px;
+}
+
+i{
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+
+/*Increasing size of icon and center-aligning*/
+.user-icon{
+  font-size: 70px;
+  text-align: center;
+}
+
+/*Stlying username*/
+h2{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+/*Styling personal info*/
+.p-info{
+  text-align: center;
+
+}
+
+
+footer{
+  position: absolute;
+  bottom: -100%;
+  background-color: #2f2d30;
+  width: 100%;
+  color: #d6d6d6;
+  text-align: center;
+  clear: both;
+}
+hr{
+  width: 30%;
+  margin-left: 40%;
+}
+footer a{
+  text-decoration: none;
+  color: #d6d6d6;
+}
+#generic{
+  margin-top: 10px;
+  text-align: center;
+  float: left;
+}
+#left-links{
+  float: left;
+  font-size: 1.2rem;
+  display: inline;
+  margin-top: 10px;
+}
+#right-links{
+  top:10px;
+  left: 85%;
+  margin-top: 0;
+  font-size: 1.2rem;
+  position: absolute;
+}
+@media screen  and (max-width:600px) {
+  nav, main{
+      width:100%;
+  }
+  
+}
+
+table{
+ border-collapse: collapse;
+ background-color: #ffffff;
+
+ color: #2f2d30;
+ width: 800px;
+ 
+
+}
+th, td{
+  padding: 10px;  /* Padding for cells */
+  border: 1px solid #ddd;  /* Table borders */
+  text-align: left;
+ 
+}
+th {
+  background-color: #f2f2f2;  /* Background color for headers */
+  font-weight: bold;  /* Bold text for headers */
+}
+tr:nth-child(even) {
+  background-color: #eee;  /* Alternate row background color */
+}
+#students, #companies, #matches{
+  position:absolute;
+  top: 30%;
+  left: 30%;
+}
