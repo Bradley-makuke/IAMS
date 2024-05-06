@@ -1,8 +1,8 @@
 <?php
-$dbHost = 'localhost';
-$dbUserername= 'root';
-$dbPassword = '';
-$dbName = 'code';
+$dbHost = '10.0.19.74';
+$dbUserername= 'tsu00073';
+$dbPassword = 'tsu0073';
+$dbName = 'db_tsu00073';
 $conn = new mysqli($dbHost, $dbUserername, $dbPassword, $dbName);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
